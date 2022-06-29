@@ -1,0 +1,143 @@
+<h3 > {{modoEdicion ? 'Editar orden' : 'Crear orden'}}</h3>
+<div class="container">
+  <form [formGroup]="formOrder">
+
+
+
+      <div class="row">
+
+          <div class="form-group col-md-6 col-sm-12 col-xs-12">
+            <label for="country">Usuario</label>
+            
+                <select class="form-select" formControlName="idUser" [ngClass]="{ 'is-invalid': submitted && f.idUser.errors }">
+                    <option value="" selected disabled hidden>Seleccione..</option>
+                    <option *ngFor="let user of Users" [value]="user.IdUser">{{user.Name}}</option>
+                </select>
+            
+          </div>
+          <div class="form-group col-md-6 col-sm-12 col-xs-12">
+              <label for="first-name">Número de orden</label>
+              <input type="text" class="form-control" formControlName="OrderNumber" placeholder="Número de orden">
+          </div>
+
+          
+        <div class="form-group col-md-6 col-sm-12 col-xs-12">
+          <label for="country">Fecha de la orden</label>
+
+            <input type="date" class="form-control" formControlName="DateTime" placeholder="Fecha de la orden">
+
+        </div>
+        <div class="form-group col-md-6 col-sm-12 col-xs-12">
+            <label for="first-name">Nombre del proveedor</label>
+            <input type="text" class="form-control" formControlName="ProviderName" placeholder="Nombre del proveedor">
+        </div>
+
+        <!-- <div class="form-group col-6">
+          <label for="country">Fecha de la orden</label>
+
+            <input type="text" class="form-control" formControlName="DateTime" placeholder="Fecha de la orden">
+
+        </div>
+        <div class="form-group col-6">
+            <label for="first-name">Nombre del proveedor</label>
+            <input type="text" class="form-control" formControlName="ProviderName" placeholder="Nombre del proveedor">
+        </div> -->
+      </div>
+      
+
+      <hr>
+
+      <h5>Productos</h5>
+
+      <form [formGroup]="formProducts">
+   
+      <div formArrayName="products">
+        <button
+        type="button"
+        class="btn btn-raised btn-info"
+     (click)="agregarProduct()"
+      >
+        Agregar
+      </button>
+          <hr>
+        <div *ngFor="let product of products.controls; let i = index;">
+          <div class="row" [formGroupName]="i">
+
+              <div class="form-group col-md-3">
+                  <label for="ValueUnit">Valor de la unidad</label>
+                  <input type="number" formControlName="ValueUnit" class="form-control">
+           
+              </div>
+              <div class="form group col-md-3">
+                  <label for="Unit">Unidad</label>
+                  <input type="number" formControlName="Unit" class="form-control" >
+              </div>
+    
+              <div class="form-group col-md-3">
+                  <label for="Description">Descripcion</label>
+                  <input type="text" formControlName="Description" class="form-control" >
+              </div>
+              <div class="form-group col-md-3">
+                  <label for="SKU">SKU {{product.SKU}}</label>
+                  <input type="text" formControlName="SKU" class="form-control" [readonly]="product.Edicion==1" >
+              </div>
+              <div class="form-group col-md-3">
+                <label for="Quantity">Cantidad</label>
+                <input type="number" (blur)="sumatoria()" formControlName="Quantity" class="form-control">
+         
+            </div>
+            <div class="form group col-md-3">
+                <label for="QtyBox">Cantidad de cajas</label>
+                <input type="number" formControlName="QtyBox" class="form-control" >
+            </div>
+  
+            <div class="form-group col-md-3">
+                <label for="expiration">Peso</label>
+                <input type="text" formControlName="Weight" class="form-control" >
+            </div>
+            <div class="form-group col-md-3">
+                <label for="Weight">Volumen</label>
+                <input type="text" formControlName="Volumen" class="form-control" >
+            </div>
+            <div class="form-group col-md-3">
+              <label for="Mark">Marca</label>
+              <input type="text" formControlName="Mark" class="form-control" >
+            </div>
+            <div class="form-group col-md-3 eliminar">
+              <button type="button" *ngIf="!modoEdicion" class="btn btn-danger container " (click)="deleteProduct(i)">Eliminar</button>
+              <button type="button" *ngIf="modoEdicion && products.controls" class="btn btn-danger container " (click)="deleteProductServer(product)">Eliminar</button>
+            </div>
+          </div>
+          <hr>
+        </div>
+        
+
+
+      </div>
+    </form>
+      <hr>
+      <div class="row">
+        <div class="form-group col-md-6 col-sm-12 col-xs-12">
+          <label for="TotalValue">Valor total</label>
+
+            <input type="text" class="form-control" formControlName="TotalValue" placeholder="" readonly>
+
+        </div>
+        <div class="form-group col-md-6 col-sm-12 col-xs-12">
+            <label for="Observation">Observation</label>
+            <input type="text" class="form-control" formControlName="Observation" placeholder="">
+        </div>
+      </div>
+      <br>
+        <button type="button" *ngIf="!modoEdicion" class="btn btn-primary container" [disabled]="!formOrder.valid" (click)="saveOrder()">Guardar</button>
+        <button type="button" *ngIf="modoEdicion" class="btn btn-primary container" [disabled]="!formOrder.valid" (click)="editOrder()">
+          
+          Editar</button>
+   
+      
+
+  </form>
+
+
+
+</div>
