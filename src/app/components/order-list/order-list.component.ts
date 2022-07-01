@@ -19,6 +19,7 @@ export class OrderListComponent implements OnInit {
 
   ngOnInit(): void {
     this.getOrders();
+  
   }
 
   getOrders(): void {
@@ -26,7 +27,8 @@ export class OrderListComponent implements OnInit {
       .subscribe(
         data => {
           this.orders = data.data;
-          console.log(data.data);
+         
+          this.promedioOrdenes();
         },
         error => {
           console.log(error);
@@ -67,6 +69,53 @@ export class OrderListComponent implements OnInit {
       },
       error: (e) =>  console.log(e),
     });
+  }
+
+
+  promedioOrdenes(){
+
+    this.orders.forEach((element,index) => {
+      console.log('ordenes',element)
+      let sumProducto=0;
+      let sumProducto2=0;
+      let total
+      this.apiService.getProductsOrder(element.idOrder)
+      .subscribe(
+        productos => {
+
+          productos.data.forEach((producto,indexProd) => {
+
+            console.log('productos',producto)
+             sumProducto2 += producto.ValueUnit;
+
+             sumProducto++;
+            //  sumProducto+=sumProducto2
+
+            
+             console.log('temporal',sumProducto2)
+            
+
+          });
+        
+          total=sumProducto2
+        
+          console.log('total prod',sumProducto)
+          let totalProducto=sumProducto
+          sumProducto=0;
+          // 
+          this.orders[index]['sumatoria']=total/totalProducto
+          sumProducto2=0;
+        });
+ 
+        
+ 
+
+          console.log('ordenes', this.orders)
+      
+    });
+
+
+
   }
 
 }

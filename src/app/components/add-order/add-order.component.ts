@@ -96,6 +96,7 @@ export class AddOrderComponent implements OnInit {
                       Weight: new FormControl(element['Weight']),
                       Volumen: new FormControl(element['Volumen']),
                       Mark: new FormControl(element['Mark']),
+                      NLote: new FormControl(element['NLote']),
                     
 
                     });
@@ -243,6 +244,7 @@ export class AddOrderComponent implements OnInit {
       Weight: new FormControl(),
       Volumen: new FormControl(),
       Mark: new FormControl(),
+      NLote: new FormControl(),
      
     });
   

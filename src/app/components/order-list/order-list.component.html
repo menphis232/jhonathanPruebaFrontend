@@ -15,6 +15,7 @@
           <th scope="col">Número de orden</th>
           <th scope="col">Nombre del proveedor</th>
           <th scope="col">Valor Total</th>
+          <th scope="col">Promedio de las ordenes</th>
           <th scope="col">Acciones</th>
         </tr>
       </thead>
@@ -25,6 +26,7 @@
           <td>{{order.OrderNumber}}</td>
           <td>{{order.ProviderName}}</td>
           <td>$ {{order.TotalValue}}</td>
+          <td>{{order.sumatoria}}</td>
           <td>
             <div class="btn-group">  
               <button
